@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profesor - EduConnect Pro</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -11,14 +11,15 @@
 </head>
 
 <body>
+  <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()">☰</button>
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
   <aside class="sidebar">
-    <!-- PERFIL EN LA ESQUINA IZQUIERDA -->
-    <div class="sidebar-profile">
-      <img src="cea_logo.png" id="sidebarAvatar" alt="Avatar CEA" class="sidebar-avatar">
-      <div class="sidebar-profile-info">
-        <strong>EduConnect</strong>
-        <small>PORTAL DOCENTE</small>
+    <div class="logo">
+      <img src="cea_logo.png" alt="Logo CEA">
+      <div class="logo-text">
+        <span>EduConnect</span>
+        <small>Portal Docente</small>
       </div>
     </div>
     <nav>
@@ -27,19 +28,17 @@
       <a href="#" onclick="showTab('anuncios',this)">📢 Anuncios</a>
       <a href="#" onclick="openProfileModal()">👤 Mi Perfil</a>
     </nav>
-    <div class="sidebar-logout">
+    <div class="logout">
       <a href="#" onclick="logout()">🔴 Cerrar Sesión</a>
     </div>
   </aside>
+
   <main class="main">
-    <div class="topbar">
-      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-      <img src="cea_logo.png" class="topbar-logo" alt="CEA Logo">
-    </div>
     <div class="header">
       <h1>Panel Docente</h1>
-      <p>Bienvenido, <strong id="welcomeName">Docente</strong></p>
+      <p>Gestión académica y seguimiento de aprendizaje</p>
     </div>
+
     <!-- ══ TAB: NOTAS ══ -->
     <div class="tab-content active" id="tab-notas">
       <div class="card">
@@ -78,6 +77,7 @@
         </div>
       </div>
     </div>
+
     <!-- ══ TAB: MATERIALES ══ -->
     <div class="tab-content" id="tab-materiales">
       <div class="card">
@@ -98,13 +98,13 @@
         </div>
       </div>
     </div>
+
     <!-- ══ TAB: ANUNCIOS ══ -->
     <div class="tab-content" id="tab-anuncios">
       <div class="grid-2">
         <div class="card">
           <h3>📢 Enviar Anuncio a Estudiantes</h3>
           <textarea id="announcement" placeholder="Escriba su comunicado aquí..." style="height:150px"></textarea>
-          <input type="hidden" id="announcementTarget" value="estudiante">
           <button class="btn btn-primary" style="margin-top:20px; width:100%" onclick="enviarAnuncio()">📤
             Enviar</button>
         </div>
@@ -115,13 +115,16 @@
       </div>
     </div>
   </main>
+
   <script>
     let mySubjects = [], selectedSubjectId = null;
+
     document.addEventListener('DOMContentLoaded', () => {
       if (!token) { window.location.href = 'index.html'; return; }
+      document.getElementById('welcomeName').textContent = `${currentUser.first_name || ''} ${currentUser.last_name || ''}`;
       loadSubjects();
-      loadMessages();
     });
+
     async function loadSubjects() {
       const subjects = await api('/api/profesor/subjects');
       if (subjects) {
@@ -133,6 +136,7 @@
         document.getElementById('matSubject').innerHTML = '<option value="">— Seleccionar —</option>' + subjects.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
       }
     }
+
     async function selectSubject(id, name) {
       selectedSubjectId = id;
       document.getElementById('selectedSubjectName').textContent = name;
@@ -152,51 +156,7 @@
           </tr>`).join('');
       }
     }
-    async function loadMessages() {
-      const msgs = await api('/api/messages');
-      if (msgs) renderMsgHistory([], msgs.received || []);
-    }
-    async function subirMaterial() {
-      const subject_id = document.getElementById('matSubject').value;
-      const title = document.getElementById('matTitle').value.trim();
-      const url = document.getElementById('matUrl').value.trim();
-      if (!subject_id || !title || !url) { showAlert('Completa todos los campos', 'warning'); return; }
-      const res = await api('/api/profesor/materials', { method: 'POST', body: JSON.stringify({ subject_id, title, url }) });
-      if (res && res.id) {
-        showBanner('✅ Material publicado', '');
-        document.getElementById('matTitle').value = '';
-        document.getElementById('matUrl').value = '';
-        loadMaterialsList(subject_id);
-      }
-    }
-    async function loadMaterialsList(sid) {
-      const mats = await api(`/api/profesor/materials/${sid}`);
-      if (mats) {
-        document.getElementById('materialsList').innerHTML = mats.map(m => `
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:rgba(255,255,255,0.03); border-radius:8px; margin-bottom:8px">
-            <a href="${m.url}" target="_blank" style="color:var(--accent); text-decoration:none">📄 ${m.title}</a>
-            <button class="btn btn-sm" style="color:var(--red); background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2)" onclick="borrarMaterial(${m.id})">🗑</button>
-          </div>`).join('') || '<p style="font-size:0.8rem; color:var(--text-muted)">Sin materiales aún.</p>';
-      }
-    }
-    async function borrarMaterial(id) {
-      await api(`/api/profesor/materials/${id}`, { method: 'DELETE' });
-      const sid = document.getElementById('matSubject').value;
-      if (sid) loadMaterialsList(sid);
-    }
-    async function guardarNota(enrollmentId, dimension, score, totalEl) {
-      const res = await api('/api/profesor/grade', { method: 'POST', body: JSON.stringify({ enrollment_id: enrollmentId, dimension, score: parseFloat(score) }) });
-      if (res && res.grade) {
-        showToast('Nota guardada ✅');
-        const row = document.getElementById('row-enr-' + enrollmentId);
-        if (row) {
-          const inputs = row.querySelectorAll('.grade-input');
-          let total = 0;
-          inputs.forEach(inp => total += parseFloat(inp.value) || 0);
-          row.querySelector('.total-cell').textContent = total;
-        }
-      }
-    }
+
     function toggleSidebar() {
       document.querySelector(".sidebar").classList.toggle("open");
       document.getElementById("sidebarOverlay").classList.toggle("open");

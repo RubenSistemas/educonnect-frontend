@@ -3,26 +3,11 @@
    Importar en todos los portales via:
    <script src="app.js"></script>
    ═════════════════════════════════════════════ */
+
 const API = 'https://educonnect-backend-1.onrender.com';
 let token = localStorage.getItem('token');
 let currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-/* ─── User UI Initialization ────────────────────────── */
-function initUserUI() {
-    const welcomeEl = document.getElementById('welcomeName');
 
-    if (currentUser) {
-        const name = currentUser.first_name || 'Usuario';
-        const last = currentUser.last_name || '';
-        const fullName = `${name} ${last}`.trim();
-
-        if (welcomeEl) {
-            welcomeEl.textContent = fullName;
-        }
-    }
-}
-document.addEventListener('DOMContentLoaded', () => {
-    initUserUI();
-});
 /* ─── API Helper ─────────────────────────────────────── */
 async function api(path, opts = {}) {
     const res = await fetch(API + path, {
@@ -36,20 +21,24 @@ async function api(path, opts = {}) {
     if (res.status === 401) { logout(); return null; }
     return res.json();
 }
+
 /* ─── Logout ─────────────────────────────────────────── */
 function logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     window.location.href = 'index.html';
 }
+
 /* ─── Custom Alert (replaces native alert()) ─────────── */
 function showAlert(message, type = 'error', title = '') {
     // Remove any existing alert
     const existing = document.getElementById('customAlertOverlay');
     if (existing) existing.remove();
+
     const icons = { error: '⚠️', success: '✅', info: 'ℹ️', warning: '🔔' };
     const colors = { error: 'var(--red)', success: 'var(--green)', info: 'var(--blue)', warning: 'var(--yellow)' };
     const defaultTitles = { error: 'Error', success: '¡Éxito!', info: 'Información', warning: 'Atención' };
+
     const overlay = document.createElement('div');
     overlay.id = 'customAlertOverlay';
     overlay.className = 'alert-overlay';
@@ -63,10 +52,12 @@ function showAlert(message, type = 'error', title = '') {
     document.body.appendChild(overlay);
     overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
 }
+
 /* ─── Success Banner (for major actions) ─────────────── */
 function showBanner(title, subtitle, extras = '') {
     const existing = document.getElementById('globalBanner');
     if (existing) existing.remove();
+
     const b = document.createElement('div');
     b.id = 'globalBanner';
     b.className = 'success-banner show';
@@ -78,10 +69,12 @@ function showBanner(title, subtitle, extras = '') {
     document.body.appendChild(b);
     setTimeout(() => b.remove(), 3500);
 }
+
 /* ─── Toast notification ─────────────────────────────── */
 function showToast(message) {
     const existing = document.getElementById('globalToast');
     if (existing) existing.remove();
+
     const t = document.createElement('div');
     t.id = 'globalToast';
     t.className = 'toast show';
@@ -89,6 +82,7 @@ function showToast(message) {
     document.body.appendChild(t);
     setTimeout(() => t.remove(), 2800);
 }
+
 /* ─── Profile Modal ──────────────────────────────────── */
 function openProfileModal() {
     let overlay = document.getElementById('profileOverlay');
@@ -98,15 +92,11 @@ function openProfileModal() {
         overlay.className = 'profile-overlay';
         overlay.innerHTML = `
       <div class="profile-box">
-        <h3>👤 Mi Perfil</h3>
-        <div style="background:rgba(255,255,255,0.05); padding:16px; border-radius:12px; margin-bottom:24px; border:1px solid var(--border);">
-          <div style="font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:4px;">${currentUser.first_name || ''} ${currentUser.last_name || ''}</div>
-          <div style="display:flex; gap:8px; align-items:center;">
-             <span style="background:var(--accent); color:#000; font-size:0.7rem; font-weight:800; padding:2px 8px; border-radius:4px; text-transform:uppercase;">${currentUser.role || 'Usuario'}</span>
-             <span style="color:var(--text-muted); font-size:0.85rem;">CI: ${currentUser.carnet || '---'}</span>
-          </div>
-        </div>
-        <h4 style="font-size:0.9rem; margin-bottom:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Cambiar Contraseña</h4>
+        <h3>👤 Mi Perfil – Cambiar Contraseña</h3>
+        <p style="font-size:.83rem;color:var(--muted);margin-bottom:16px;">
+          Hola <strong>${currentUser.first_name || ''} ${currentUser.last_name || ''}</strong>.<br>
+          Puedes actualizar tu contraseña aquí.
+        </p>
         <div class="form-group">
           <label>Contraseña Actual</label>
           <input type="password" id="pwOld" placeholder="Ingresa tu contraseña actual">
@@ -127,10 +117,12 @@ function openProfileModal() {
     }
     overlay.classList.add('open');
 }
+
 async function changePassword() {
     const oldPw = document.getElementById('pwOld').value.trim();
     const newPw = document.getElementById('pwNew').value.trim();
     const confirm = document.getElementById('pwConfirm').value.trim();
+
     if (!oldPw || !newPw || !confirm) {
         showAlert('Por favor llena todos los campos.', 'warning');
         return;
@@ -143,10 +135,12 @@ async function changePassword() {
         showAlert('Las contraseñas no coinciden. Vuelve a intentarlo.', 'error');
         return;
     }
+
     const res = await api(`/api/users/${currentUser.id}/password`, {
         method: 'PUT',
         body: JSON.stringify({ old_password: oldPw, new_password: newPw })
     });
+
     if (res && res.message === 'Password updated') {
         document.getElementById('profileOverlay').classList.remove('open');
         showBanner('¡Contraseña Actualizada!', 'Tu nueva contraseña ya está activa.');
@@ -154,6 +148,7 @@ async function changePassword() {
         showAlert(res?.message || 'Error al cambiar contraseña. Verifica que escribiste bien la contraseña actual.', 'error');
     }
 }
+
 /* ─── Tab switching ──────────────────────────────────── */
 function showTab(name, el) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -161,14 +156,8 @@ function showTab(name, el) {
     const tabEl = document.getElementById('tab-' + name);
     if (tabEl) tabEl.classList.add('active');
     if (el) el.classList.add('active');
-    // Auto-close sidebar on mobile after selecting a tab
-    const sb = document.querySelector(".sidebar");
-    const overlay = document.getElementById("sidebarOverlay");
-    if (sb && sb.classList.contains("open")) {
-        sb.classList.remove("open");
-        if (overlay) overlay.classList.remove("open");
-    }
 }
+
 /* ─── Message tab switching ──────────────────────────── */
 function switchMsgTab(which) {
     const envEl = document.getElementById('msgHistoryEnviados');
@@ -176,6 +165,7 @@ function switchMsgTab(which) {
     const btnEnv = document.getElementById('tabEnviados');
     const btnRec = document.getElementById('tabRecibidos');
     if (!envEl) return;
+
     if (which === 'enviados') {
         envEl.style.display = 'block'; recEl.style.display = 'none';
         btnEnv.style.background = 'var(--accent)'; btnEnv.style.color = '#fff';
@@ -186,6 +176,7 @@ function switchMsgTab(which) {
         btnEnv.style.background = 'rgba(255,255,255,.08)'; btnEnv.style.color = 'var(--text)';
     }
 }
+
 /* ─── Announcement helpers ───────────────────────────── */
 function formatLinks(text) {
     return (text || '').replace(/(https?:\/\/[^\s]+)/g, url =>
@@ -195,12 +186,14 @@ function formatLinks(text) {
              border-radius:6px;font-weight:600;">🔗 Abrir Enlace</a>`
     ).replace(/\n/g, '<br>');
 }
+
 function roleLabel(role) {
     const colors = { director: '#a78bfa', profesor: '#34d399', secretaria: '#60a5fa', estudiante: '#f59e0b' };
     const names = { director: '🏢 Director', profesor: '👨‍🏫 Profesor', secretaria: '💼 Secretaria', estudiante: '📚 Estudiante' };
     return `<span style="background:rgba(255,255,255,.07);color:${colors[role] || '#ccc'};
     padding:2px 8px;border-radius:20px;font-size:.72rem;font-weight:600;">${names[role] || role}</span>`;
 }
+
 function buildMsgCard(m, type) {
     const isOut = type === 'sent';
     const label = isOut
@@ -216,9 +209,11 @@ function buildMsgCard(m, type) {
       <p style="font-size:.87rem;margin:0;line-height:1.5;">${formatLinks(m.message)}</p>
     </div>`;
 }
+
 function renderMsgHistory(sent, received) {
     const envEl = document.getElementById('msgHistoryEnviados');
     const recEl = document.getElementById('msgHistoryRecibidos');
+
     if (envEl) {
         envEl.innerHTML = (sent && sent.length)
             ? sent.map(m => buildMsgCard(m, 'sent')).join('')
@@ -230,6 +225,7 @@ function renderMsgHistory(sent, received) {
             : '<p style="color:var(--muted);font-size:.85rem">No tienes comunicados recibidos.</p>';
     }
 }
+
 /* ─── Shared enviarAnuncio (with target_role select) ─── */
 async function enviarAnuncio() {
     const msgText = document.getElementById('announcement').value.trim();
@@ -237,16 +233,22 @@ async function enviarAnuncio() {
     const linkText = linkEl ? linkEl.value.trim() : '';
     const targetEl = document.getElementById('announcementTarget');
     const target_role = targetEl ? targetEl.value : 'todos';
+
     if (!msgText) { showAlert('Escriba un mensaje antes de enviar.', 'warning'); return; }
+
     let finalMsg = msgText;
     if (linkText) finalMsg += `\nEnlace adjunto: ${linkText}`;
+
     const btn = document.getElementById('btnAnuncio');
     if (btn) { btn.innerHTML = '<span class="spinner"></span> Enviando...'; btn.disabled = true; }
+
     const res = await api('/api/announcement', {
         method: 'POST',
         body: JSON.stringify({ message: finalMsg, target_role })
     });
+
     if (btn) { btn.innerHTML = '📤 Enviar Anuncio'; btn.disabled = false; }
+
     if (res && res.count !== undefined) {
         showBanner('¡Anuncio Enviado!', `${res.message || 'Enviado correctamente.'}`);
         document.getElementById('announcement').value = '';
