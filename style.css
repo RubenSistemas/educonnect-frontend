@@ -978,3 +978,28 @@ tr:hover td {
         gap: 12px !important;
     }
 }
+
+
+/* --- MOBILE TOPBAR TITLE --- */
+.topbar-title {
+    display: none;
+    flex: 1;
+    text-align: center;
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    margin: 0 10px;
+}
+
+@media (max-width: 1024px) {
+    .topbar-title {
+        display: block !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .topbar-title {
+        font-size: 0.95rem;
+    }
+}
