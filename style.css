@@ -820,3 +820,186 @@ tr:hover td {
         display: block !important;
     }
 }
+
+
+/* --- NOTIFICATIONS AND RESPONSIVE FIXES --- */
+.confirm-banner, .success-banner {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--sidebar);
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    padding: 24px 48px;
+    z-index: 99999 !important;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.confirm-banner.show, .success-banner.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.toast {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 24px;
+    border-radius: 12px;
+    z-index: 99999 !important;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.toast.show {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+}
+
+.alert-overlay {
+    z-index: 99999 !important;
+}
+
+@media (max-width: 1024px) {
+    /* Small screen tables responsiveness */
+    th, td {
+        padding: 10px 8px !important;
+        font-size: 0.8rem !important;
+    }
+    
+    .grade-input {
+        width: 45px !important;
+        padding: 6px !important;
+        text-align: center;
+    }
+}
+
+
+/* --- MORE RESPONSIVE FIXES FOR STAFF AND PHOTO --- */
+@media (max-width: 1024px) {
+    /* Mover la foto del usuario (sidebar) más abajo para no chocar con el Topbar */
+    .sidebar-profile {
+        padding-top: 70px !important; 
+    }
+    
+    /* Asegurar que el div de la tabla se pueda deslizar sin romper la tarjeta */
+    .table-wrap {
+        -webkit-overflow-scrolling: touch;
+        overflow-x: auto;
+        width: 100%;
+    }
+    
+    /* Achicar un poco más las celdas en dispositivos muy pequeños */
+    @media (max-width: 640px) {
+        th, td {
+            font-size: 0.75rem !important;
+            padding: 8px 6px !important;
+            white-space: nowrap; /* Evita que el texto de columnas largas se rompa en muchas líneas */
+        }
+    }
+}
+
+
+/* --- OVERRIDE PREVIOUS RULES FOR BETTER SMALL SCREEN WRAPPING --- */
+@media (max-width: 640px) {
+    th, td {
+        white-space: normal !important;
+    }
+    
+    /* Ajustes ultra-compactos para planilla de notas del profesor */
+    #studentsTable th, #studentsTable td {
+        padding: 4px 2px !important;
+        font-size: 0.70rem !important;
+    }
+    
+    .grade-input {
+        width: 38px !important;
+        padding: 4px 2px !important;
+        font-size: 0.75rem !important;
+        text-align: center;
+    }
+}
+
+
+/* --- FIX OVERFLOWING CARDS AND GRIDS ON EXTREMELY SMALL SCREENS --- */
+.person-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+@media (max-width: 640px) {
+    /* Forzar que todos los grids problemáticos sean 1 sola columna en pantallas de celular */
+    .subjects-grid, .person-grid, .grid-4, .grid-2 {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Reducir el padding de las tarjetas para dar más espacio al contenido interno */
+    .card {
+        padding: 16px !important;
+    }
+    
+    /* Asegurar que ningún elemento rompa el ancho máximo de la pantalla */
+    body, .main, .card {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    /* El table-wrap puede tener scroll, no limitarlo con overflow hidden, 
+       pero asegurar que la página principal no scrollee horizontalmente */
+    .table-wrap {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+
+/* --- ULTRA COMPACT MOBILE LAYOUT --- */
+@media (max-width: 640px) {
+    .main {
+        padding: 80px 10px 20px !important;
+    }
+    
+    .card {
+        padding: 12px 10px !important;
+    }
+    
+    .grid-4, .grid-2, .subjects-grid, .person-grid {
+        gap: 12px !important;
+    }
+}
+
+
+/* --- MOBILE TOPBAR TITLE --- */
+.topbar-title {
+    display: none;
+    flex: 1;
+    text-align: center;
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    margin: 0 10px;
+}
+
+@media (max-width: 1024px) {
+    .topbar-title {
+        display: block !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .topbar-title {
+        font-size: 0.95rem;
+    }
+}
