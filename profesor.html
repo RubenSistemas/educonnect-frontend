@@ -110,6 +110,11 @@
         </div>
         <div class="card">
           <h3>📨 Mis Comunicados</h3>
+          <div class="tabs">
+            <button id="tabEnviados" class="tab-btn" onclick="switchMsgTab('enviados')">📤 Enviados</button>
+            <button id="tabRecibidos" class="tab-btn active" onclick="switchMsgTab('recibidos')">📥 Recibidos</button>
+          </div>
+          <div id="msgHistoryEnviados" style="max-height:400px; overflow-y:auto; display:none"></div>
           <div id="msgHistoryRecibidos" style="max-height:400px; overflow-y:auto"></div>
         </div>
       </div>
@@ -154,7 +159,7 @@
     }
     async function loadMessages() {
       const msgs = await api('/api/messages');
-      if (msgs) renderMsgHistory([], msgs.received || []);
+      if (msgs) renderMsgHistory(msgs.sent || [], msgs.received || []);
     }
     async function subirMaterial() {
       const subject_id = document.getElementById('matSubject').value;

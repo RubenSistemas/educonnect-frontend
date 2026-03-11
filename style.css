@@ -883,3 +883,49 @@ tr:hover td {
         text-align: center;
     }
 }
+
+
+/* --- MORE RESPONSIVE FIXES FOR STAFF AND PHOTO --- */
+@media (max-width: 1024px) {
+    /* Mover la foto del usuario (sidebar) más abajo para no chocar con el Topbar */
+    .sidebar-profile {
+        padding-top: 70px !important; 
+    }
+    
+    /* Asegurar que el div de la tabla se pueda deslizar sin romper la tarjeta */
+    .table-wrap {
+        -webkit-overflow-scrolling: touch;
+        overflow-x: auto;
+        width: 100%;
+    }
+    
+    /* Achicar un poco más las celdas en dispositivos muy pequeños */
+    @media (max-width: 640px) {
+        th, td {
+            font-size: 0.75rem !important;
+            padding: 8px 6px !important;
+            white-space: nowrap; /* Evita que el texto de columnas largas se rompa en muchas líneas */
+        }
+    }
+}
+
+
+/* --- OVERRIDE PREVIOUS RULES FOR BETTER SMALL SCREEN WRAPPING --- */
+@media (max-width: 640px) {
+    th, td {
+        white-space: normal !important;
+    }
+    
+    /* Ajustes ultra-compactos para planilla de notas del profesor */
+    #studentsTable th, #studentsTable td {
+        padding: 4px 2px !important;
+        font-size: 0.70rem !important;
+    }
+    
+    .grade-input {
+        width: 38px !important;
+        padding: 4px 2px !important;
+        font-size: 0.75rem !important;
+        text-align: center;
+    }
+}
