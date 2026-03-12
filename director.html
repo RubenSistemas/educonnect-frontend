@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -16,7 +17,7 @@
     <div id="certModal" class="modal" style="display:none; background: rgba(0,0,0,0.85); overflow-y: scroll;">
        <div class="modal-content" style="max-width: 800px; padding:0; background:white; color:#333; margin: 40px auto; position:relative; box-shadow: 0 0 50px rgba(0,0,0,0.5)">
            <div style="padding: 10px; display:flex; justify-content: flex-end; background: #eee; border-bottom: 2px solid #ddd;" class="no-print">
-               <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir Certificado</button>
+               <button class="btn btn-primary" onclick="downloadCertificatePDF()">📥 Descargar Certificado (PDF)</button>
                <button class="btn" style="background:#888; color:white; margin-left:10px;" onclick="document.getElementById('certModal').style.display='none'">Cerrar</button>
            </div>
            <!-- DISEÑO DEL CERTIFICADO -->
@@ -578,6 +579,19 @@
       } else {
         showAlert(res?.message || 'Error al eliminar usuario', 'error');
       }
+    }
+
+    function downloadCertificatePDF() {
+      const element = document.getElementById('printableCert');
+      const name = document.getElementById('certStudentName').textContent || 'Certificado';
+      const opt = {
+        margin: 5,
+        filename: `Certificado_${name.replace(/ /g, '_')}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().set(opt).from(element).save();
     }
 
     function toggleSidebar() {
