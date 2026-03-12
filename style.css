@@ -22,6 +22,7 @@
     --radius: 20px;
     --glass: rgba(255, 255, 255, 0.05);
     --blur: blur(16px);
+    color-scheme: dark;
 }
 
 * {
@@ -38,6 +39,24 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     line-height: 1.5;
+    color-scheme: dark;
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--card2);
+    border: 2px solid var(--bg);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
 }
 
 /* ── Sidebar (Premium Glassmorphism) ── */
@@ -454,6 +473,11 @@ textarea:focus {
     background: rgba(0, 0, 0, 0.3);
     outline: none;
     box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+option {
+    background-color: var(--card2);
+    color: var(--text);
 }
 
 /* ── Buttons ── */
