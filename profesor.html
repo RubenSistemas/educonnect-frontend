@@ -124,15 +124,15 @@
       if (subjects) {
         mySubjects = subjects;
         document.getElementById('subjectCards').innerHTML = subjects.map(s => `
-          <div class="subject-card" id="sc-${s.id}" onclick="selectSubject(${s.id}, '${s.name}')">
-            <h4>📘 ${s.name}</h4><p>Gestionar notas</p>
+          <div class="subject-card" id="sc-${s.id}" onclick="selectSubject(${s.id}, '${s.name}', '${s.level}')">
+            <h4>📘 ${s.name}</h4><p>${s.level}</p>
           </div>`).join('');
-        document.getElementById('matSubject').innerHTML = '<option value="">— Seleccionar —</option>' + subjects.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        document.getElementById('matSubject').innerHTML = '<option value="">— Seleccionar —</option>' + subjects.map(s => `<option value="${s.id}">${s.name} (${s.level})</option>`).join('');
       }
     }
-    async function selectSubject(id, name) {
+    async function selectSubject(id, name, level) {
       selectedSubjectId = id;
-      document.getElementById('selectedSubjectName').textContent = name;
+      document.getElementById('selectedSubjectName').textContent = `${name} - ${level}`;
       document.getElementById('studentsSection').style.display = 'block';
       const data = await api(`/api/profesor/students_by_subject/${id}`);
       if (data && data.students) {
