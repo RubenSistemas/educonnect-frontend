@@ -354,7 +354,7 @@
         document.getElementById('statEstudiantes').textContent = res.enrollments || 0;
         document.getElementById('statMaterias').textContent = res.subjects || 0;
       }
-      const data = await api('/api/users/grouped');
+      const data = await api('/api/secretaria/users_grouped');
       if (data) {
         allTeachers = data.profesores || [];
         allPersonnel = [...(data.directores || []), ...(data.secretarias || []), ...(data.profesores || [])];
