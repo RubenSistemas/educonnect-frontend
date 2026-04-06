@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Estudiante - EduConnect Pro</title>
+  <title>Portal Estudiante – EduConnect | CEA Pailón</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="app.js"></script>
@@ -27,6 +27,11 @@
       <a href="#" onclick="showTab('anuncios',this)">📢 Novedades</a>
       <a href="#" onclick="openProfileModal()">👤 Mi Perfil</a>
     </nav>
+    <div class="sidebar-contact">
+      <a href="https://wa.me/59174420831" target="_blank">
+        📞 +591 74420831
+      </a>
+    </div>
     <div class="sidebar-logout">
       <a href="#" onclick="logout()">🔴 Cerrar Sesión</a>
     </div>
@@ -34,12 +39,12 @@
   <main class="main">
     <div class="topbar">
       <img src="cea_logo.png" class="topbar-logo" alt="CEA Logo">
-      <div class="topbar-title">CEA HERMAN ORTIZ C.</div>
+      <div class="topbar-title">CEA PAILÓN &middot; ESTUDIANTE</div>
       <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
     </div>
     <div class="header">
-      <h1>Panel de Estudiante</h1>
-      <p>Bienvenido, <strong id="welcomeName">Estudiante</strong></p>
+      <h1>📚 Portal del Estudiante</h1>
+      <p>Bienvenido, <strong id="welcomeName">Estudiante</strong> &mdash; <span style="color:var(--gold);font-size:0.85rem">CEA Herman Ortiz C. &bull; Pailón</span></p>
     </div>
     <!-- ══ TAB: NOTAS ══ -->
     <div class="tab-content active" id="tab-notas">
@@ -81,7 +86,7 @@
         const promedioHtml = !isTecnica
           ? `<tr style="border-top:1px solid var(--border)">
                <td style="font-weight:700">Promedio</td>
-               <td style="font-weight:700; color:var(--accent)">${g.promedio !== null && g.promedio !== undefined ? g.promedio + ' / 100' : '—'}</td>
+               <td style="font-weight:800; color:var(--gold)">${g.promedio !== null && g.promedio !== undefined ? g.promedio + ' / 100' : '—'}</td>
              </tr>` : '';
         const badgeClass = g.estado === 'Aprobado' ? 'badge-green' : g.estado === 'Reprobado' ? 'badge-red' : 'badge-blue';
         return `<div class="card" style="margin-bottom:16px">
@@ -111,8 +116,8 @@
       const mats = await api(`/api/estudiante/materials/${sid}`);
       if (mats) {
         document.getElementById(`mats-${sid}`).innerHTML = mats.map(m => `
-          <div class="material-item" style="padding:10px; background:rgba(255,255,255,0.03); border-radius:8px; margin-bottom:8px">
-            <a href="${m.url}" target="_blank" style="color:var(--accent); text-decoration:none; display:block">📄 ${m.title} ↗</a>
+          <div class="material-item" style="padding:10px; background:rgba(30,64,175,0.05); border:1px solid rgba(30,64,175,0.15); border-radius:8px; margin-bottom:8px">
+            <a href="${m.url}" target="_blank" style="color:#93c5fd; text-decoration:none; display:block; font-size:0.9rem; font-weight:500">📄 ${m.title} ↗️</a>
           </div>`).join('') || '<p style="font-size:0.8rem; color:var(--text-muted)">Aún no hay recursos subidos.</p>';
       }
     }

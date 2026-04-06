@@ -1,27 +1,34 @@
 /* ═══════════════════════════════════════════
    EduConnect Pro – Premium Shared Stylesheet
-   Design Level: Ultra-Premium / High-End
+   Paleta Institucional: CEA Pailón Bolivia
+   Azul Marino + Dorado Académico
    ═══════════════════════════════════════════ */
 :root {
-    --bg: #05070a;
-    --sidebar: #0a0d14;
-    --card: #0f131a;
-    --card2: #161b24; /* Un tono un poco más claro para separar capas */
-    --border: rgba(255, 255, 255, 0.12);
-    --border-hover: rgba(34, 197, 94, 0.4);
-    --accent: #22c55e;
-    --accent-glow: rgba(34, 197, 94, 0.6);
+    --bg: #06080f;
+    --sidebar: #08091a;
+    --card: #0e1120;
+    --card2: #141826; /* Capa superior para separar secciones */
+    --border: rgba(255, 255, 255, 0.10);
+    --border-hover: rgba(30, 64, 175, 0.5);
+    /* ── Paleta CEA Pailón ── */
+    --accent: #1e40af;           /* Azul marino institucional */
+    --accent-light: #3b82f6;     /* Azul más brillante para textos */
+    --accent-glow: rgba(30, 64, 175, 0.55);
+    --gold: #d4a017;             /* Dorado académico */
+    --gold-light: #f5c842;       /* Dorado brillante */
+    --gold-glow: rgba(212, 160, 23, 0.40);
     --blue: #3b82f6;
     --blue-glow: rgba(59, 130, 246, 0.6);
     --purple: #a855f7;
     --purple-glow: rgba(168, 85, 247, 0.6);
     --red: #ff4d4d;
     --yellow: #fbbf24;
-    --text: #ffffff;
+    --green: #22c55e;
+    --text: #f0f4f8;
     --text-muted: #94a3b8;
     --radius: 20px;
-    --glass: rgba(255, 255, 255, 0.05);
-    --blur: blur(16px);
+    --glass: rgba(255, 255, 255, 0.04);
+    --blur: blur(18px);
     color-scheme: dark;
 }
 
@@ -86,15 +93,15 @@ body {
     height: 72px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid var(--accent);
-    box-shadow: 0 0 20px var(--accent-glow);
+    border: 3px solid var(--gold);
+    box-shadow: 0 0 20px var(--gold-glow), 0 0 40px var(--accent-glow);
 }
 
 .logo-text span {
     font-size: 1.25rem;
     font-weight: 800;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #fff, var(--accent));
+    background: linear-gradient(135deg, #fff 20%, var(--gold-light) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -103,11 +110,12 @@ body {
 
 .logo-text small {
     display: block;
-    font-size: 0.75rem;
-    color: var(--text-muted);
+    font-size: 0.72rem;
+    color: var(--gold);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     text-align: center;
+    font-weight: 600;
 }
 
 nav {
@@ -136,10 +144,11 @@ nav a:hover {
 }
 
 nav a.active {
-    background: linear-gradient(135deg, var(--accent), #16a34a);
-    color: #000;
-    font-weight: 800;
-    box-shadow: 0 8px 20px var(--accent-glow);
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 6px 20px var(--accent-glow);
+    border-left: 3px solid var(--gold);
 }
 
 .logout {
@@ -184,8 +193,8 @@ nav a.active {
     height: 72px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid var(--accent);
-    box-shadow: 0 0 20px var(--accent-glow);
+    border: 3px solid var(--gold);
+    box-shadow: 0 0 20px var(--gold-glow), 0 0 35px var(--accent-glow);
 }
 
 .sidebar-profile-info strong {
@@ -203,10 +212,11 @@ nav a.active {
 .sidebar-profile-info small {
     display: block;
     font-size: 0.72rem;
-    color: var(--accent);
+    color: var(--gold);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     margin-top: 2px;
+    font-weight: 600;
 }
 
 /* -- Sidebar Logout -- */
@@ -287,9 +297,9 @@ nav a.active {
 }
 
 .card:hover {
-    border-color: var(--accent);
-    transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
+    border-color: rgba(30, 64, 175, 0.4);
+    transform: translateY(-5px) scale(1.005);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px var(--accent-glow);
 }
 
 .card h3 {
@@ -377,18 +387,22 @@ nav a.active {
 
 .stat-card.accent {
     border-bottom: 4px solid var(--accent);
+    background: linear-gradient(180deg, rgba(30, 64, 175, 0.05), transparent);
 }
 
 .stat-card.blue {
     border-bottom: 4px solid var(--blue);
+    background: linear-gradient(180deg, rgba(59, 130, 246, 0.05), transparent);
 }
 
 .stat-card.purple {
     border-bottom: 4px solid var(--purple);
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.05), transparent);
 }
 
 .stat-card.yellow {
-    border-bottom: 4px solid var(--yellow);
+    border-bottom: 4px solid var(--gold);
+    background: linear-gradient(180deg, rgba(212, 160, 23, 0.05), transparent);
 }
 
 .stat-card .stat-val {
@@ -469,10 +483,10 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-    border-color: var(--accent);
+    border-color: rgba(30, 64, 175, 0.6);
     background: rgba(0, 0, 0, 0.3);
     outline: none;
-    box-shadow: 0 0 0 4px var(--accent-glow);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15), 0 0 20px rgba(30, 64, 175, 0.08);
 }
 
 option {
@@ -496,14 +510,15 @@ option {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--accent), #16a34a);
+    background: linear-gradient(135deg, #1e40af, #1e3a8a);
     color: #fff;
     box-shadow: 0 4px 15px var(--accent-glow);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px var(--accent-glow);
+    box-shadow: 0 8px 25px var(--accent-glow), 0 0 15px var(--gold-glow);
+    background: linear-gradient(135deg, #2563eb, #1e40af);
 }
 
 .btn-purple {
@@ -1079,10 +1094,11 @@ tr:hover td {
     display: none;
     flex: 1;
     text-align: center;
-    color: var(--accent);
+    color: var(--gold);
     font-weight: 800;
-    font-size: 1.1rem;
-    letter-spacing: 0.5px;
+    font-size: 1.0rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     margin: 0 10px;
 }
 
@@ -1094,6 +1110,194 @@ tr:hover td {
 
 @media (max-width: 640px) {
     .topbar-title {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
     }
+}
+
+/* ═══════════════════════════════════════════
+   CEA Pailón – Estilos Institucionales Extra
+   Paleta: Azul Marino #1e40af + Dorado #d4a017
+   ═══════════════════════════════════════════ */
+
+/* ── Badge System ── */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.badge-accent, .badge-blue {
+    background: rgba(30, 64, 175, 0.15);
+    color: #93c5fd;
+    border: 1px solid rgba(30, 64, 175, 0.3);
+}
+
+.badge-green {
+    background: rgba(34, 197, 94, 0.12);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+.badge-gold, .badge-yellow {
+    background: rgba(212, 160, 23, 0.12);
+    color: var(--gold-light);
+    border: 1px solid rgba(212, 160, 23, 0.3);
+}
+
+.badge-purple {
+    background: rgba(168, 85, 247, 0.12);
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+.badge-red {
+    background: rgba(255, 77, 77, 0.12);
+    color: #f87171;
+    border: 1px solid rgba(255, 77, 77, 0.25);
+}
+
+/* ── Subject Cards (Portal Docente) ── */
+.subject-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 14px;
+    padding: 20px 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.subject-card:hover {
+    border-color: var(--gold);
+    border-left-color: var(--gold);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3), 0 0 15px var(--gold-glow);
+    background: rgba(212, 160, 23, 0.04);
+}
+
+.subject-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.subject-card p {
+    font-size: 0.78rem;
+    color: var(--gold);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+/* ── Btn Red ── */
+.btn-red {
+    background: rgba(255, 77, 77, 0.1);
+    color: var(--red);
+    border: 1px solid rgba(255,77,77,0.2);
+}
+.btn-red:hover {
+    background: rgba(255, 77, 77, 0.2);
+}
+
+/* ── Sidebar Contact Footer (CEA 74420831) ── */
+.sidebar-contact {
+    padding: 12px 16px;
+    margin: 0 12px 12px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+.sidebar-contact a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+    opacity: 0.8;
+}
+
+.sidebar-contact a:hover {
+    opacity: 1;
+    text-shadow: 0 0 10px var(--gold-glow);
+}
+
+/* ── Top blue-gold gradient bar on Sidebar ── */
+.sidebar::before {
+    content: '';
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
+    margin-bottom: 0;
+}
+
+/* ── Topbar CEA blue strip ── */
+.topbar {
+    border-bottom: 2px solid rgba(30, 64, 175, 0.3) !important;
+    background: rgba(6, 8, 15, 0.92) !important;
+}
+
+.topbar::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-glow), transparent);
+}
+
+/* ── Menu toggle CEA institutional ── */
+.menu-toggle {
+    color: var(--gold) !important;
+    border-color: rgba(212, 160, 23, 0.25) !important;
+}
+
+/* ── Table empty rows ── */
+.empty-row td {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 28px !important;
+    font-style: italic;
+    font-size: 0.88rem;
+}
+
+/* ── Tab btn active with gold accent ── */
+.tab-btn.active {
+    background: linear-gradient(135deg, var(--accent), #1e3a8a) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px var(--accent-glow) !important;
+}
+
+/* ── Card h3 with gold icon ── */
+.card h3 {
+    background: linear-gradient(135deg, #fff 60%, #93c5fd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── Scrollbar CEA colors ── */
+::-webkit-scrollbar-thumb {
+    background: rgba(30, 64, 175, 0.4) !important;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent) !important;
+}
+
+/* ── Input focus gold tint ── */
+.grade-input:focus {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 0 2px var(--gold-glow) !important;
 }
