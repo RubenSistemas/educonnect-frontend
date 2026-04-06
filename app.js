@@ -3,7 +3,7 @@
    Importar en todos los portales via:
    <script src="app.js"></script>
    ═════════════════════════════════════════════ */
-const API = 'https://educonnect-backend-1.onrender.com';
+const API = 'https://https://cea-pailon.onrender.com/';
 let token = localStorage.getItem('token');
 let currentUser = JSON.parse(localStorage.getItem('user') || '{}');
 /* ─── User UI Initialization ────────────────────────── */
