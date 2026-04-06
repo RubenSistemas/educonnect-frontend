@@ -60,7 +60,7 @@
   <aside class="sidebar">
     <!-- PERFIL EN LA ESQUINA IZQUIERDA -->
     <div class="sidebar-profile">
-      <img src="director.png" id="sidebarAvatar" alt="Avatar CEA" class="sidebar-avatar">
+      <img src="DIRECTOR.png" id="sidebarAvatar" alt="Avatar CEA" class="sidebar-avatar">
       <div class="sidebar-profile-info">
         <strong>EduConnect</strong>
         <small>PORTAL DIRECCIÓN</small>
@@ -599,12 +599,8 @@
       html2pdf().set(opt).from(element).save();
     }
 
-    function toggleSidebar() {
-      const sb = document.querySelector(".sidebar");
-      const overlay = document.getElementById("sidebarOverlay");
-      sb.classList.toggle("open");
-      overlay.classList.toggle("open");
-    }
+    // toggleSidebar se maneja desde app.js para todos los portales
+
   </script>
 </body>
 

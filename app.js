@@ -257,3 +257,17 @@ async function enviarAnuncio() {
         showAlert(res?.message || 'Ocurrió un error al enviar el anuncio.', 'error');
     }
 }
+
+/* ─── Responsive Sidebar Toggle ───────────────────────── */
+function toggleSidebar() {
+    const sidebar = document.querySelector(".sidebar");
+    const overlay = document.getElementById("sidebarOverlay");
+    
+    if (sidebar) {
+        sidebar.classList.toggle("open");
+    }
+    const overlayRef = overlay || document.querySelector(".sidebar-overlay");
+    if (overlayRef) {
+        overlayRef.classList.toggle("open");
+    }
+}

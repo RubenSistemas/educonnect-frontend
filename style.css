@@ -1108,10 +1108,62 @@ tr:hover td {
     }
 }
 
+/* ── Responsive Layout & Breakpoints ── */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        width: 280px;
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+        backdrop-filter: var(--blur);
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+        padding-top: 80px; /* Espacio para el topbar fijo */
+    }
+    
+    .topbar {
+        left: 0;
+        width: 100%;
+        padding: 0 16px;
+        backdrop-filter: var(--blur);
+        border-bottom: 1px solid var(--border);
+    }
+    
+    .menu-toggle {
+        display: flex;
+    }
+    
+    .grid-4, .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
 @media (max-width: 640px) {
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .stat-card {
+        padding: 16px;
+    }
+    
     .topbar-title {
         font-size: 0.85rem;
         letter-spacing: 0.5px;
+    }
+    
+    .sidebar-overlay.open {
+        display: block;
+        opacity: 1;
     }
 }
 
@@ -1124,7 +1176,7 @@ tr:hover td {
 .badge {
     display: inline-flex;
     align-items: center;
-    padding: 3px 10px;
+    padding: 4px 10px;
     border-radius: 20px;
     font-size: 0.72rem;
     font-weight: 700;
@@ -1133,171 +1185,191 @@ tr:hover td {
 }
 
 .badge-accent, .badge-blue {
-    background: rgba(30, 64, 175, 0.15);
+    background: rgba(30, 64, 175, 0.2);
     color: #93c5fd;
-    border: 1px solid rgba(30, 64, 175, 0.3);
+    border: 1px solid rgba(30, 64, 175, 0.4);
 }
 
 .badge-green {
-    background: rgba(34, 197, 94, 0.12);
+    background: rgba(34, 197, 94, 0.15);
     color: #4ade80;
-    border: 1px solid rgba(34, 197, 94, 0.25);
+    border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 .badge-gold, .badge-yellow {
-    background: rgba(212, 160, 23, 0.12);
+    background: rgba(212, 160, 23, 0.15);
     color: var(--gold-light);
-    border: 1px solid rgba(212, 160, 23, 0.3);
+    border: 1px solid rgba(212, 160, 23, 0.4);
 }
 
 .badge-purple {
-    background: rgba(168, 85, 247, 0.12);
+    background: rgba(168, 85, 247, 0.15);
     color: #c084fc;
-    border: 1px solid rgba(168, 85, 247, 0.25);
+    border: 1px solid rgba(168, 85, 247, 0.3);
 }
 
 .badge-red {
-    background: rgba(255, 77, 77, 0.12);
+    background: rgba(255, 77, 77, 0.15);
     color: #f87171;
-    border: 1px solid rgba(255, 77, 77, 0.25);
+    border: 1px solid rgba(255, 77, 77, 0.3);
 }
 
-/* ── Subject Cards (Portal Docente) ── */
-.subject-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--accent);
+/* ── Premium Sidebar Layout ── */
+.sidebar {
+    background: rgba(8, 9, 26, 0.85);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+}
+
+.sidebar-profile {
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+}
+
+.sidebar-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 20px var(--gold-glow);
+}
+
+.sidebar-profile-info strong {
+    display: block;
+    font-size: 1.1rem;
+    color: #fff;
+    margin-top: 8px;
+}
+
+.sidebar-profile-info small {
+    color: var(--accent-light);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* ── Nav Improvements ── */
+.sidebar nav {
+    padding: 10px 16px;
+    flex: 1;
+}
+
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    color: var(--text-muted);
+    text-decoration: none;
     border-radius: 14px;
-    padding: 20px 18px;
-    cursor: pointer;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
     transition: all 0.3s ease;
 }
 
-.subject-card:hover {
-    border-color: var(--gold);
-    border-left-color: var(--gold);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.3), 0 0 15px var(--gold-glow);
-    background: rgba(212, 160, 23, 0.04);
-}
-
-.subject-card h4 {
-    font-size: 0.95rem;
-    font-weight: 700;
+.sidebar nav a:hover {
+    background: rgba(255, 255, 255, 0.05);
     color: #fff;
-    margin-bottom: 6px;
+    padding-left: 22px;
 }
 
-.subject-card p {
-    font-size: 0.78rem;
-    color: var(--gold);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
+.sidebar nav a.active {
+    background: linear-gradient(90deg, rgba(30, 64, 175, 0.25), transparent);
+    color: #fff;
+    border-left: 4px solid var(--gold);
+    box-shadow: inset 10px 0 30px rgba(30, 64, 175, 0.1);
 }
 
-/* ── Btn Red ── */
-.btn-red {
-    background: rgba(255, 77, 77, 0.1);
-    color: var(--red);
-    border: 1px solid rgba(255,77,77,0.2);
-}
-.btn-red:hover {
-    background: rgba(255, 77, 77, 0.2);
-}
-
-/* ── Sidebar Contact Footer (CEA 74420831) ── */
+/* ── Sidebar contact improvement ── */
 .sidebar-contact {
-    padding: 12px 16px;
-    margin: 0 12px 12px;
+    padding: 20px;
+    margin: 0 16px 10px;
     border-top: 1px solid var(--border);
-    text-align: center;
+    background: rgba(212, 160, 23, 0.03);
+    border-radius: 16px;
 }
 
-.sidebar-contact a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    font-size: 0.72rem;
-    color: var(--gold);
-    text-decoration: none;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    transition: all 0.2s;
-    opacity: 0.8;
+/* ── Main content scroll behavior ── */
+.main {
+    transition: margin 0.4s ease;
+    min-height: 100vh;
 }
 
-.sidebar-contact a:hover {
-    opacity: 1;
-    text-shadow: 0 0 10px var(--gold-glow);
+/* ── Card animations ── */
+.card {
+    background: rgba(14, 17, 32, 0.7);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--border);
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-/* ── Top blue-gold gradient bar on Sidebar ── */
-.sidebar::before {
-    content: '';
-    display: block;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
-    margin-bottom: 0;
+.card:hover {
+    border-color: rgba(30, 64, 175, 0.4);
 }
 
-/* ── Topbar CEA blue strip ── */
+/* ── Topbar Fixed Mobility ── */
 .topbar {
-    border-bottom: 2px solid rgba(30, 64, 175, 0.3) !important;
-    background: rgba(6, 8, 15, 0.92) !important;
+    position: fixed;
+    top: 0;
+    z-index: 90;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.topbar::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-glow), transparent);
+.topbar-logo {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    background: #fff;
+    object-fit: cover;
+    margin-left: 16px;
+    box-shadow: 0 0 15px var(--gold-glow);
+    transition: transform 0.3s ease;
 }
 
-/* ── Menu toggle CEA institutional ── */
-.menu-toggle {
-    color: var(--gold) !important;
-    border-color: rgba(212, 160, 23, 0.25) !important;
+.topbar-logo:hover {
+    transform: scale(1.1) rotate(5deg);
 }
 
-/* ── Table empty rows ── */
-.empty-row td {
-    text-align: center;
-    color: var(--text-muted);
-    padding: 28px !important;
-    font-style: italic;
-    font-size: 0.88rem;
-}
 
-/* ── Tab btn active with gold accent ── */
-.tab-btn.active {
-    background: linear-gradient(135deg, var(--accent), #1e3a8a) !important;
+/* ── Form Inputs Pro ── */
+input, select, textarea {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
     color: #fff !important;
-    box-shadow: 0 4px 12px var(--accent-glow) !important;
+    transition: all 0.3s ease !important;
 }
 
-/* ── Card h3 with gold icon ── */
-.card h3 {
-    background: linear-gradient(135deg, #fff 60%, #93c5fd 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+input:focus, select:focus, textarea:focus {
+    border-color: var(--accent) !important;
+    background: rgba(30, 64, 175, 0.08) !important;
+    box-shadow: 0 0 15px rgba(30, 64, 175, 0.15) !important;
+    outline: none !important;
 }
 
-/* ── Scrollbar CEA colors ── */
+/* ── Scrollbar customization ── */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 ::-webkit-scrollbar-thumb {
-    background: rgba(30, 64, 175, 0.4) !important;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: var(--accent) !important;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
 }
 
-/* ── Input focus gold tint ── */
-.grade-input:focus {
-    border-color: var(--gold) !important;
-    box-shadow: 0 0 0 2px var(--gold-glow) !important;
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
 }
